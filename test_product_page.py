@@ -1,32 +1,47 @@
+import pytest
+
 from pages.product_page import ProductPage
 
+product_base_link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207"
 
-link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear"
 
+list_of_failed_num = [7]
+tested_links = [f"{product_base_link}?promo=offer{i}" if i not in list_of_failed_num else
+                pytest.param(f"{product_base_link}?promo=offer{i}",
+                             marks=pytest.mark.xfail(reason="some bug", strict=True)
+                             )
+                for i in range(10)]
+print(tested_links)
 
-def test_guest_can_add_product_to_basket(browser):
+@pytest.mark.parametrize('link', tested_links)
+def test_guest_can_add_product_to_basket(browser, link):
     page = ProductPage(browser, link)
     page.open()
     page.product_add_to_cart()
     page.solve_quiz_and_get_code()
     page.should_be_success_message()
-def test_guest_can_see_cart_message(browser):
+
+@pytest.mark.parametrize('link', tested_links)
+def test_guest_can_see_cart_message(browser, link):
     page = ProductPage(browser, link)
     page.open()
     page.product_add_to_cart()
     page.solve_quiz_and_get_code()
     page.should_be_cart_message()
-def test_valid_product_name_in_success_message(browser):
+@pytest.mark.parametrize('link', tested_links)
+def test_valid_product_name_in_success_message(browser, link):
     page = ProductPage(browser, link)
     page.open()
     page.product_add_to_cart()
     page.solve_quiz_and_get_code()
     page.should_be_success_message()
     page.should_be_right_product_name()
-def test_valid_product_price_in_success_message(browser):
+@pytest.mark.parametrize('link', tested_links)
+def test_valid_product_price_in_success_message(browser, link):
     page = ProductPage(browser, link)
     page.open()
     page.product_add_to_cart()
     page.solve_quiz_and_get_code()
     page.should_be_cart_message()
-    page.shold_be_right_product_price()
+    page.should_be_right_product_price()
+

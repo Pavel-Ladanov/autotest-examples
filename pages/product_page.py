@@ -24,8 +24,16 @@ class ProductPage(BasePage):
 
     def should_be_success_message(self):
         assert self.is_element_present(*ProductPageLocators.SUCCESS_ADD_TO_CART_MESSAGE), "Success message is not presented"
+    def should_be_cart_message(self):
+        assert self.is_element_present(*ProductPageLocators.SUCCESS_ADD_TO_CART_PRICE_MESSAGE), "Success message is not presented"
     def should_be_right_product_name(self):
-        self.element_text(*ProductPageLocators.SUCCESS_ADD_TO_CART_MESSAGE) == self.element_text()
+        assert self.element_text(*ProductPageLocators.PRODUCT_PRICE) ==\
+               self.element_text(*ProductPageLocators.PRODUCT_PRICE_IN_CART_PRICE_MESSAGE), "Product price do not match"
+    def shold_be_right_product_price(self):
+        assert self.element_text(*ProductPageLocators.PRODUCT_NAME) in\
+               self.element_text(*ProductPageLocators.SUCCESS_ADD_TO_CART_MESSAGE), "Product name do not match"
+
+
 
 
     def sleep(self,sec):

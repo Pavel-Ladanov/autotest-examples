@@ -15,7 +15,7 @@ class BasePage():
         return True
     def element_text(self, how, what):
         try:
-            text = self.browser.find_element(how, what).text()
+            text = self.browser.find_element(how, what).text
         except (NoSuchElementException):
             return False
-        return text
+        return str(text)

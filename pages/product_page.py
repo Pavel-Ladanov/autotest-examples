@@ -33,7 +33,13 @@ class ProductPage(BasePage):
         assert self.element_text(*ProductPageLocators.PRODUCT_NAME) ==\
                self.element_text(*ProductPageLocators.SUCCESS_ADD_TO_CART_MESSAGE), "Product name do not match"
 
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_ADD_TO_CART_MESSAGE), \
+            "Success message is presented, but should not be"
 
+    def should_be_disappeared_success_message(self):
+        assert self.is_disappeared (*ProductPageLocators.SUCCESS_ADD_TO_CART_MESSAGE), \
+            "Success message is not disappeared"
 
 
     def sleep(self,sec):

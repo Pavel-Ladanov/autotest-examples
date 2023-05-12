@@ -2,7 +2,7 @@ from .locators import ProductPageLocators
 from .base_page import BasePage
 from selenium.common.exceptions import NoAlertPresentException
 import math
-import time
+
 class ProductPage(BasePage):
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
@@ -41,6 +41,3 @@ class ProductPage(BasePage):
         assert self.is_disappeared (*ProductPageLocators.SUCCESS_ADD_TO_CART_MESSAGE), \
             "Success message is not disappeared"
 
-
-    def sleep(self,sec):
-        time.sleep(sec)

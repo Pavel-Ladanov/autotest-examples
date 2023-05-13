@@ -56,5 +56,15 @@ class BasePage():
         except TimeoutException:
             return False
         return True
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+                                                                     " probably unauthorised user"
+    def send_text_to_element(self, how, what,text):
+        try:
+            element = self.browser.find_element(how, what)
+            element.send_keys(text)
+        except (NoSuchElementException):
+            return False
     def sleep(self,sec):
         time.sleep(sec)
